@@ -7,12 +7,7 @@
     <artifactId>spring-boot-crud</artifactId>
     <name>spring-boot-crud</name>
 
-   <!--  <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.0.6.RELEASE</version>
-</parent>
- -->
+ 
 
 	<parent>
         <groupId>com.mt</groupId>
