@@ -7,12 +7,20 @@
     <artifactId>spring-boot-crud</artifactId>
     <name>spring-boot-crud</name>
 
-    <parent>
+   <!--  <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>2.0.6.RELEASE</version>
 </parent>
+ -->
 
+	<parent>
+        <groupId>com.mt</groupId>
+        <artifactId>spring-boot-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>         
+    </parent>
+    
+   
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
