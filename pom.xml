@@ -4,21 +4,23 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.mt</groupId>
     <artifactId>spring-boot-crud</artifactId>
     <name>spring-boot-crud</name>
-<version>1.5-SNAPSHOT</version>
-  <packaging>jar</packaging>
-         
-         
-   
-          
-    <parent>
+
+   <!--  <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>2.0.6.RELEASE</version>
 </parent>
+ -->
 
+	<parent>
+        <groupId>com.mt</groupId>
+        <artifactId>spring-boot-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>         
+    </parent>
+    
+   
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -89,18 +91,8 @@
             </plugin>
         </plugins>
     </build>
-         <distributionManagement>
-         <repository>
-             <id>deployment</id>
-             <name>Internal Releases</name>
-             <url>http://localhost:8081/repository/mt-release/</url>
-         </repository>
-         <snapshotRepository>
-             <id>deployment</id>
-             <name>Internal Snapshot Releases</name>
-             <url>http://localhost:8081/repository/mt-snapshot/</url>
-         </snapshotRepository>
-     </distributionManagement>
+
+
 <profiles>
         <profile>
             <id>unit</id>
