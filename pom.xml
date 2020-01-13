@@ -4,9 +4,15 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     
     <modelVersion>4.0.0</modelVersion>
+    <groupId>com.mt</groupId>
     <artifactId>spring-boot-crud</artifactId>
     <name>spring-boot-crud</name>
-
+<version>1.5-SNAPSHOT</version>
+  <packaging>jar</packaging>
+         
+         
+   
+          
     <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
