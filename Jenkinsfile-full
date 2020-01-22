@@ -1,10 +1,13 @@
 node {
+
+try{
+    notifyBuild('STARTED')
+
+
+
     stage 'Clone the project'
 dir('spring-boot-crud') {    
-    emailext body: '''body: "Please go to ${BUILD_URL} to verify the build"
-''', replyTo: 'manonair20@gmail.com', subject: '"Job \'${JOB_NAME}\' (${BUILD_NUMBER}) is Started Deploying"', to: 'manonair20@gmail.com'
-
-    
+ 
         
     git 'https://github.com/manonair/spring-boot-crud.git'
  
@@ -65,10 +68,37 @@ dir('spring-boot-crud') {
                 }
             }
             
-     
+      
 }   
-     
+  } catch (e) {
+     // If there was an exception thrown, the build failed
+     currentBuild.result = "FAILED"
+     throw e
+   } finally {
+     // Success or failure, always send notifications
+     notifyBuild(currentBuild.result)
+   }   
      
 }
 
+
+def notifyBuild(String buildStatus = 'STARTED') {
+   // build status of null means successful
+   buildStatus =  buildStatus ?: 'SUCCESSFUL'
+ 
+   // Default values
+   
+   def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
+   def summary = "${subject} (${env.BUILD_URL})"
+   
+   def details = """<p>STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+     <p>Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>"""
+ 
+   emailext (
+       subject: subject,
+       body: details,
+       to: 'manonair20@gmail.com'
+     )
+ }
+ 
 
