@@ -46,6 +46,7 @@ pipeline {
                     echo "${filesByGlob[0].name} ${filesByGlob[0].path} ${filesByGlob[0].directory} ${filesByGlob[0].length} ${filesByGlob[0].lastModified}"
                     // Extract the path from the File found
                     artifactPath = filesByGlob[0].path;
+                    echo "artifactPath: "$artifactPath
                     // Assign to a boolean response verifying If the artifact name exists
                     artifactExists = fileExists artifactPath;
                     if(artifactExists) {
@@ -61,8 +62,13 @@ pipeline {
                                 // Artifact generated such as .jar, .ear and .war files.
                                 [artifactId: pom.artifactId,
                                 classifier: '',
-                                file: 'spring-boot-crud' + version + '.jar',
-                                 type: 'jar']
+                                file: artifactPath,
+                                type: pom.packaging],
+                                // Lets upload the pom.xml file for additional information for Transitive dependencies
+                                [artifactId: pom.artifactId,
+                                classifier: '',
+                                file: "pom.xml",
+                                type: "pom"]
                             ]
                         );
                 echo "COMPLETED UPLOADING"
