@@ -30,7 +30,7 @@ pipeline {
                     // If you are using Windows then you should use "bat" step
                     // Since unit testing is out of the scope we skip them
                  
-                     sh "mvn clean package -DskipTests=true"
+                     sh "mvn install -DskipTests=true"
                      
                 }
             }
@@ -46,7 +46,6 @@ pipeline {
                     echo "${filesByGlob[0].name} ${filesByGlob[0].path} ${filesByGlob[0].directory} ${filesByGlob[0].length} ${filesByGlob[0].lastModified}"
                     // Extract the path from the File found
                     artifactPath = filesByGlob[0].path;
-                    echo "artifactPath: "$artifactPath
                     // Assign to a boolean response verifying If the artifact name exists
                     artifactExists = fileExists artifactPath;
                     if(artifactExists) {
