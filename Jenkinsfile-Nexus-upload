@@ -63,8 +63,8 @@ pipeline {
                                 // Artifact generated such as .jar, .ear and .war files.
                                 [artifactId: pom.artifactId,
                                 classifier: '',
-                                file: artifactPath,
-                                type: pom.packaging]
+                                file: pom.artifactId + version + '.jar',
+                                 type: 'jar']
                             ]
                         );
                 echo "COMPLETED UPLOADING"
