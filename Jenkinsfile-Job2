@@ -30,7 +30,7 @@ pipeline {
                    
                     steps{
                         echo "====++++Compilation ++++===="
-                        sh "mvn clean verify -DskipTests"
+                        sh "mvn clean package -DskipTests"
                     }
                     post{
                         failure{
@@ -83,29 +83,29 @@ pipeline {
 
 
         // 7)	Do static code analysis using SonarQube, create quality gate to pass to next environment
-        // stage("Sonarqube analysis"){
-        //     steps{
-        //        echo "====++++Sonarqube analysis++++===="
-        //         withSonarQubeEnv('sonar-6') {
-        //             sh "mvn sonar:sonar" 
+        stage("Sonarqube analysis"){
+            steps{
+               echo "====++++Sonarqube analysis++++===="
+                withSonarQubeEnv('sonar-6') {
+                    sh "mvn sonar:sonar" 
                     
-        //         }
-        //     }
-        // } 
-        // stage('Sonar scan result check') {
-        //     steps {
-        //          echo "====++++Sonarqube result check++++===="
-        //         script {
-        //              sleep(60)
-        //             timeout(time: 5, unit: 'MINUTES') {
-        //                 def qg = waitForQualityGate()
-        //                 if (qg.status != 'OK') {
-        //                     error "Pipeline aborted due to quality gate failure: ${qg.status}"
-        //                 }
-        //             }                    
-        //         }
-        //     }
-        // }
+                }
+            }
+        } 
+        stage('Sonar scan result check') {
+            steps {
+                 echo "====++++Sonarqube result check++++===="
+                script {
+                     sleep(60)
+                    timeout(time: 5, unit: 'MINUTES') {
+                        def qg = waitForQualityGate()
+                        if (qg.status != 'OK') {
+                            error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                        }
+                    }                    
+                }
+            }
+        }
 
 // 8)	Create the package and store in Artifactory/Nexus 
 
@@ -148,6 +148,15 @@ pipeline {
                     } else {
                         error "*** File: ${artifactPath}, could not be found";
                     }
+                }
+            }
+            post{
+                success{
+                    emailNotification()
+                }
+                failure{
+                    emailNotification('FAILURE')
+                    echo "====++++publish to nexus execution failed++++===="
                 }
             }
         }
