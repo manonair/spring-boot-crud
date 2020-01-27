@@ -62,16 +62,10 @@ pipeline {
                                 [artifactId: pom.artifactId,
                                 classifier: '',
                                 file: artifactPath,
-                                type: pom.packaging],
-                                // Lets upload the pom.xml file for additional information for Transitive dependencies
-                                [artifactId: pom.artifactId,
-                                classifier: '',
-                                file: "pom.xml",
-                                type: "pom"]
+                                type: 'jar']
                             ]
                         );
-                echo "COMPLETED UPLOADING"
-
+                        echo "COMPLETED UPLOADING"
                     } else {
                         error "*** File: ${artifactPath}, could not be found";
                     }
